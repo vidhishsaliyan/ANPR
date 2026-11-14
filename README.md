@@ -40,3 +40,5 @@ model.predict('test_vid.mp4', save=True, imgsz=320, conf=0.2)
 #### To perform Detection and Recognition (YOLOv8 + easyOCR) run the below command: 
 
 !python predict_modified.py model='ultralytics/runs/detect/train_model/weights/best.pt' source='test_vid.mp4' 
+
+bye
