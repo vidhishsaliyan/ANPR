@@ -96,6 +96,7 @@ class DetectionPredictor(BasePredictor):
                 
                 text_ocr = perform_ocr_on_image(im0,xyxy)
                 label = text_ocr 
+                print(text_ocr)
                 
                 self.annotator.box_label(xyxy, label, color=colors(c, True))
             if self.args.save_crop:

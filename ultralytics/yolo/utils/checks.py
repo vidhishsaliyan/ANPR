@@ -11,7 +11,11 @@ from typing import Optional
 
 import cv2
 import numpy as np
-import pkg_resources as pkg
+try:
+    import pkg_resources as pkg
+except ImportError:
+    import importlib.metadata as pkg
+    
 import torch
 
 from ultralytics.yolo.utils import (AUTOINSTALL, FONT, LOGGER, ROOT, USER_CONFIG_DIR, TryExcept, colorstr, emojis,
@@ -89,7 +93,10 @@ def check_version(current: str = "0.0.0",
     Returns:
         bool: True if minimum version is met, False otherwise.
     """
-    from pkg_resources import parse_version
+    try:
+        from pkg_resources import parse_version
+    except ImportError:
+        from packaging.version import parse as parse_version
     current, minimum = (parse_version(x) for x in (current, minimum))
     result = (current == minimum) if pinned else (current >= minimum)  # bool
     warning_message = f"WARNING ⚠️ {name}{minimum} is required by YOLOv5, but {name}{current} is currently installed"
