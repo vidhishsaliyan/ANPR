@@ -12,19 +12,34 @@ from ultralytics.yolo.utils.plotting import Annotator, colors, save_one_box
 import easyocr
 import cv2
 
+from image_preprocess import process
+
 reader = easyocr.Reader(['en'], gpu=True)
 
-def perform_ocr_on_image(img, coordinates):
-    x, y, w, h = map(int, coordinates)
-    cropped_img = img[y:h, x:w]
+def perform_ocr_on_image(img):
 
-    gray_img = cv2.cvtColor(cropped_img, cv2.COLOR_RGB2GRAY)
-    results = reader.readtext(gray_img)
+    results = reader.readtext(img)
 
     text = ""
     for res in results:
         if len(results) == 1 or (len(res[1]) > 6 and res[2] > 0.2):
             text = res[1]
+
+    # Remove all spaces, special characters, and convert to uppercase
+    text = ''.join(c for c in text if c.isalnum()).upper()
+
+    # fix first 2 characters if confused with digits (must be letters)
+    digit_to_char = {'0': 'O', '1': 'I', '2': 'Z', '4': 'A', '5': 'S', '8': 'B', '6': 'G'}
+    if len(text) >= 2:
+        c1 = digit_to_char.get(text[0], text[0])
+        c2 = digit_to_char.get(text[1], text[1])
+        text = c1 + c2 + text[2:]
+
+    # fix last 4 characters if confused with letters (must be digits)
+    char_to_digit = {'O': '0', 'D': '0', 'Q': '0', 'I': '1', 'L': '1', 'Z': '2', 'A': '4', 'S': '5', 'G': '6', 'B': '8'}
+    if len(text) >= 6:
+        last4 = [char_to_digit.get(c, c) for c in text[-4:]]
+        text = text[:-4] + ''.join(last4)
 
     return str(text)
 
@@ -94,7 +109,8 @@ class DetectionPredictor(BasePredictor):
                     self.model.names[c] if self.args.hide_conf else f'{self.model.names[c]} {conf:.2f}')
                 
                 
-                text_ocr = perform_ocr_on_image(im0,xyxy)
+                enhanced_image = process(im0, xyxy)
+                text_ocr = perform_ocr_on_image(enhanced_image)
                 label = text_ocr 
                 print(text_ocr)
                 
