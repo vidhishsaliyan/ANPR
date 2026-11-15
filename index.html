@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Entry/Exit Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- Sidebar navigation -->
+    <div class="sidebar">
+      <h2>Vehicle Logging</h2>
+      <a href="#" id="link-dashboard" class="active" onclick="showPage('dashboard'); return false;">Dashboard</a>
+      <a href="#" id="link-logs" onclick="showPage('logs'); return false;">Logs</a>
+      <a href="#" id="link-about" onclick="showPage('about'); return false;">About</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+
+      <p id="message"></p>
+
+      <!-- Dashboard page -->
+      <div id="page-dashboard" class="page">
+        <h1>Dashboard</h1>
+        <p class="date-text">Date: <span id="dashboardDate"></span></p>
+
+        <!-- Media Upload Section (Photo & Video for Entry & Exit) -->
+        <div class="upload-grid">
+          
+          <!-- Entrance Gate Box -->
+          <div class="upload-card">
+            <h3>Entrance Gate</h3>
+            <div class="upload-controls">
+              <div class="upload-item">
+                <label>Upload Photo</label>
+                <div class="input-btn-group">
+                  <input type="file" id="entryPhotoInput" accept="image/*">
+                  <button id="entryPhotoBtn" onclick="handleUpload('entry', 'photo')">Upload Photo</button>
+                </div>
+              </div>
+              <div class="upload-item">
+                <label>Upload Video</label>
+                <div class="input-btn-group">
+                  <input type="file" id="entryVideoInput" accept="video/*">
+                  <button id="entryVideoBtn" onclick="handleUpload('entry', 'video')">Upload Video</button>
+                </div>
+              </div>
+            </div>
+            <p class="upload-msg" id="entryMsg"></p>
+          </div>
+
+          <!-- Exit Gate Box -->
+          <div class="upload-card">
+            <h3>Exit Gate</h3>
+            <div class="upload-controls">
+              <div class="upload-item">
+                <label>Upload Photo</label>
+                <div class="input-btn-group">
+                  <input type="file" id="exitPhotoInput" accept="image/*">
+                  <button id="exitPhotoBtn" onclick="handleUpload('exit', 'photo')">Upload Photo</button>
+                </div>
+              </div>
+              <div class="upload-item">
+                <label>Upload Video</label>
+                <div class="input-btn-group">
+                  <input type="file" id="exitVideoInput" accept="video/*">
+                  <button id="exitVideoBtn" onclick="handleUpload('exit', 'video')">Upload Video</button>
+                </div>
+              </div>
+            </div>
+            <p class="upload-msg" id="exitMsg"></p>
+          </div>
+
+        </div>
+
+        <div class="summary">
+          <div class="box">
+            <p class="box-label">Total vehicles today</p>
+            <p class="box-value" id="totalToday">0</p>
+          </div>
+          <div class="box">
+            <p class="box-label">Currently inside</p>
+            <p class="box-value" id="insideNow">0</p>
+          </div>
+          <div class="box">
+            <p class="box-label">Exited today</p>
+            <p class="box-value" id="exitedToday">0</p>
+          </div>
+          <div class="box">
+            <p class="box-label">Average stay duration</p>
+            <p class="box-value" id="avgStay">-</p>
+          </div>
+        </div>
+
+        <div class="chart-area">
+          <h3>Vehicles Entered Per Hour</h3>
+          <div class="chart-box">
+            <canvas id="hourChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs page -->
+      <div id="page-logs" class="page hidden">
+        <h1>Vehicle Logs</h1>
+
+        <div class="filters">
+          <input type="text" id="searchBox" placeholder="Search plate number" oninput="filterTable()">
+          <select id="statusFilter" onchange="filterTable()">
+            <option value="All">All</option>
+            <option value="Inside">Inside</option>
+            <option value="Exited">Exited</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Sr No</th>
+                <th>Plate Number</th>
+                <th>Entry Time</th>
+                <th>Exit Time</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Plate Photo</th>
+              </tr>
+            </thead>
+            <tbody id="logTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- About page -->
+      <div id="page-about" class="page hidden">
+        <h1>About This Project</h1>
+        <p>This system logs vehicles entering and exiting a parking area or gated community using automatic license plate recognition.</p>
+        <p>Built with <strong>YOLOv8</strong> for plate localization, <strong>EasyOCR</strong> for character reading, and <strong>Supabase</strong> for cloud persistence.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="api.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

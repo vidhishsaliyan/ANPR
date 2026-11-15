@@ -7,8 +7,15 @@ __pycache__/
 venv/
 env/
 .venv/
+.env
 
 # YOLO & runs
 runs/
 *.log
 .DS_Store
+
+# Temporary outputs
+backend/temp_crops/
+backend/processed_plate.jpg
+processed_plate.jpg
+

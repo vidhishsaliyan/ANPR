@@ -1,0 +1,277 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Segoe UI", sans-serif;
+  font-size: 14px;
+  background-color: #f4f4f4;
+  color: #222222;
+}
+
+/* Page layout: sidebar on the left, content on the right */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #ffffff;
+  border-right: 1px solid #cccccc;
+  padding: 20px 0;
+}
+
+.sidebar h2 {
+  font-size: 16px;
+  margin: 0 0 20px 0;
+  padding: 0 20px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px 20px;
+  color: #222222;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  background-color: #e8f0fa;
+}
+
+.sidebar a.active {
+  background-color: #2f6fb0;
+  color: #ffffff;
+}
+
+.content {
+  flex: 1;
+  padding: 20px 30px;
+  min-width: 0;
+}
+
+h1 {
+  font-size: 22px;
+  margin: 0 0 5px 0;
+}
+
+.date-text {
+  margin: 0 0 20px 0;
+  color: #555555;
+}
+
+.hidden {
+  display: none;
+}
+
+#message {
+  color: #b00020;
+}
+
+/* Upload cards grid (Entrance & Exit) */
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.upload-card {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.upload-card h3 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #2f6fb0;
+}
+
+.upload-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.upload-item label {
+  display: block;
+  font-weight: bold;
+  font-size: 12px;
+  color: #555555;
+  margin-bottom: 5px;
+}
+
+.input-btn-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input-btn-group input[type="file"] {
+  flex: 1;
+  font-size: 13px;
+}
+
+.input-btn-group button {
+  padding: 7px 12px;
+  font-size: 13px;
+  background-color: #2f6fb0;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.input-btn-group button:hover {
+  background-color: #255a91;
+}
+
+.input-btn-group button:disabled {
+  background-color: #999999;
+  cursor: not-allowed;
+}
+
+.upload-msg {
+  margin: 10px 0 0 0;
+  color: #555555;
+}
+
+/* Summary boxes */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.box {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.box-label {
+  margin: 0 0 8px 0;
+  color: #555555;
+}
+
+.box-value {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #2f6fb0;
+}
+
+/* Chart */
+.chart-area {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.chart-area h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.chart-box {
+  position: relative;
+  height: 300px;
+}
+
+/* Search and filter */
+.filters {
+  margin: 15px 0;
+}
+
+.filters input,
+.filters select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #aaaaaa;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.filters input {
+  width: 220px;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: #2f6fb0;
+}
+
+/* Table */
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+
+th, td {
+  border: 1px solid #cccccc;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #eeeeee;
+}
+
+tbody tr:hover {
+  background-color: #e8f0fa;
+}
+
+.inside {
+  color: #2f6fb0;
+  font-weight: bold;
+}
+
+/* Small screens: stack the boxes and move the menu to the top */
+@media (max-width: 800px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #cccccc;
+    padding: 10px 0;
+  }
+
+  .sidebar h2 {
+    margin-bottom: 10px;
+  }
+
+  .sidebar a {
+    display: inline-block;
+    padding: 8px 15px;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .summary,
+  .upload-row {
+    grid-template-columns: 1fr;
+  }
+
+  .filters input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
