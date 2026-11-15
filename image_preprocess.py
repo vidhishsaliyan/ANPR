@@ -15,10 +15,10 @@ def process(img, coordinates):
     gray = cv2.cvtColor(cropped_img, cv2.COLOR_RGB2GRAY)
 
     # bilateral filter - smooths noise but keeps edges sharp
-    blurred = cv2.bilateralFilter(gray, 7, 30, 30)
+    blurred = cv2.bilateralFilter(gray, 6, 30, 30)
 
     # contrast enhancement using CLAHE
-    clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
+    clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(10, 10))
     enhanced = clahe.apply(blurred)
 
     # sharpening kernel

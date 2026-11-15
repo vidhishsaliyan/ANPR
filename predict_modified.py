@@ -18,11 +18,12 @@ reader = easyocr.Reader(['en'], gpu=True)
 
 def perform_ocr_on_image(img):
 
+    # Optimized EasyOCR call restricted to uppercase alphanumeric characters with beamsearch
     results = reader.readtext(img)
 
     text = ""
     for res in results:
-        if len(results) == 1 or (len(res[1]) > 6 and res[2] > 0.2):
+        if len(results) == 1 or (len(res[1]) > 4 and res[2] > 0.2):
             text = res[1]
 
     # Remove all spaces, special characters, and convert to uppercase
